@@ -8,4 +8,9 @@ from django.shortcuts import render, HttpResponse
 
 # ALL view functions must take in the variable request as the first argumernt
 def index(request):
-    return HttpResponse("Hello World")
+    fname = "Paul"
+    lname = "Chor"
+    return render(request, 'books/index.template.html', {
+        'first_name': fname,
+        'last_name': lname
+    })
