@@ -17,9 +17,11 @@ from django.contrib import admin
 from django.urls import path
 import books.views
 import reviews.views
+import forum.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', books.views.index),
-    path('reviews/', reviews.views.index)
+    path('reviews/', reviews.views.index),
+    path('forum/', forum.views.forum_home)
 ]
