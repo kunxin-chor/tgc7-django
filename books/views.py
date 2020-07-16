@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from .models import Book
+from .models import Book, Author
 
 # Create your views here.
 # A view (in other words, a view function) refers to a function
@@ -21,4 +21,11 @@ def show_books(request):
     all_books = Book.objects.all()
     return render(request, 'books/all_books.template.html', {
         'books': all_books
+    })
+
+
+def show_authors(request):
+    all_authors = Author.objects.all()
+    return render(request, 'books/all_authors.template.html', {
+        'authors': all_authors
     })
