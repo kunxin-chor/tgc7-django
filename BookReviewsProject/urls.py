@@ -22,6 +22,7 @@ import forum.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', books.views.index),
+    path('books/all', books.views.show_books),
     path('reviews/', reviews.views.index),
     path('forum/', forum.views.forum_home)
 ]
