@@ -13,6 +13,7 @@
             {{book.title}}
                             
             <a class="btn btn-primary btn-sm" href="{% url 'update_book_route' book_id=book.id %}">Edit</a>
+            <a class="btn btn-primary btn-sm" href="{% url 'delete_book_route' book_id=book.id %}">Delete</a>
         
         </li>
         {%endfor%}

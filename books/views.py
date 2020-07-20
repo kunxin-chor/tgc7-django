@@ -114,3 +114,18 @@ def edit_book(request, book_id):
         return render(request, 'books/edit_book.template.html', {
             'form': form
         })
+
+
+def delete_book(request, book_id):
+
+    book = get_object_or_404(Book, pk=book_id)
+
+    # if the form is submitted
+    if request.method == "POST":
+        book.delete()
+        return redirect(reverse(show_books))
+    else:
+        # if no form is submitted (that is, just to see the confirmation)
+        return render(request, 'books/confirm_delete_book.template.html', {
+            'book': book
+        })
