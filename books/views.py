@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse
 from .models import Book, Author
-from .forms import BookForm
+from .forms import BookForm, AuthorForm
 
 # Create your views here.
 # A view (in other words, a view function) refers to a function
@@ -54,3 +54,21 @@ def show_authors(request):
     return render(request, 'books/all_authors.template.html', {
         'authors': all_authors
     })
+
+
+def create_author(request):
+    # check if has been form has been submitted with data
+    # if it has been submited with data, then request.method should be "POST"
+    if request.method == "POST":
+        # user has submitted the data
+        form = AuthorForm(request.POST)
+        form.save()
+
+        return redirect(reverse(show_authors))
+    else:
+        # if user has not submitted data, it's a GET request,
+        # so we will just show an empty form
+        form = AuthorForm()
+        return render(request, 'books/create_author.template.html', {
+            'form': form
+        })
