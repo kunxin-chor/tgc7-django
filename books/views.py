@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect, reverse, get_object_or_404
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Book, Author
 from .forms import BookForm, AuthorForm
@@ -38,6 +39,9 @@ def create_book(request):
         form = BookForm(request.POST)
         # create a model based on the data in the form
         form.save()
+
+        # the book is created
+        messages.success(request, "New book has been created")
 
         # redirect back to the show_books view function
         return redirect(reverse(show_books))

@@ -12,6 +12,17 @@
   </head>
   <body>
     <div class="container">
+    {%if messages %}
+        <div class="alert alert-success">
+            {%for message in messages %}
+            <div>
+                {{message}}
+            </div>
+            {%endfor%}
+        </div>
+    {%endif%}
+
+
     {%block content %}
     {%endblock%}
     </div>
