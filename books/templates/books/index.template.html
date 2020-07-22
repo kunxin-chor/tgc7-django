@@ -8,6 +8,9 @@
     <title>Document</title>
 </head>
 <body>
+    {% if request.user.is_authenticated %}
+    <h1>Welcome, {{request.user}}</h1>
+    {% endif %}
     <h1>Welcome to Book Reviews</h1>
     <p>Hi {{first_name}} {{last_name}}</p>
     <img src="{% static 'dune-cover.jpg' %}"/>
