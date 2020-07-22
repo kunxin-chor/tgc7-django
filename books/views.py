@@ -74,6 +74,25 @@ def create_author(request):
         })
 
 
+def update_author(request, author_id):
+    # retrieve the author because we either need to update it,
+    # or to show it in a form
+    author = get_object_or_404(Author, pk=author_id)
+
+    # if the user has submitted the form
+    if request.method == "POST":
+        form = AuthorForm(request.POST, instance=author)
+        form.save()
+        return redirect(reverse(show_authors))
+    else:
+        # if the user didn't submit the form
+        form = AuthorForm(instance=author)
+        return render(request, 'books/edit_author.template.html', {
+            'form': form,
+            'author': author
+        })
+
+
 def edit_book(request, book_id):
 
     # retrieve the book that we want to edit
@@ -89,9 +108,24 @@ def edit_book(request, book_id):
 
     else:
         # if there is no form submitted, then we display the form
- 
+
         # populate the form with the existing data from the book
         form = BookForm(instance=book)
         return render(request, 'books/edit_book.template.html', {
             'form': form
+        })
+
+
+def delete_book(request, book_id):
+
+    book = get_object_or_404(Book, pk=book_id)
+
+    # if the form is submitted
+    if request.method == "POST":
+        book.delete()
+        return redirect(reverse(show_books))
+    else:
+        # if no form is submitted (that is, just to see the confirmation)
+        return render(request, 'books/confirm_delete_book.template.html', {
+            'book': book
         })
