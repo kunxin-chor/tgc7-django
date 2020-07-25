@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # Create your models here.
 
 
@@ -29,6 +29,9 @@ class Book(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     tags = models.ManyToManyField(Tag)
     authors = models.ManyToManyField('Author')
+    # set the owner relationship to be NULLABLE so that it is not complusory for all books to have an owner
+    # with `null=True` the relationship is optional (i.e, can be set to NULL)
+    owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return self.title

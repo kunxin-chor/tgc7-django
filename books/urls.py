@@ -16,4 +16,5 @@ urlpatterns = [
     path('authors/update/<author_id>', books.views.update_author,
          name='update_author_route'),
     path('authors/create', books.views.create_author),
+    path('details/<book_id>', books.views.view_book, name="view_book_details")
 ]

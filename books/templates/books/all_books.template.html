@@ -5,7 +5,9 @@
     <ul>
         {%for book in books %}
         <li>
+            <a href="{% url 'view_book_details' book_id=book.id %}">
             {{book.title}}
+            </a>
                             
             <a class="btn btn-primary btn-sm" href="{% url 'update_book_route' book_id=book.id %}">Edit</a>
             <a class="btn btn-primary btn-sm" href="{% url 'delete_book_route' book_id=book.id %}">Delete</a>

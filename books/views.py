@@ -27,6 +27,13 @@ def show_books(request):
     })
 
 
+def view_book(request, book_id):
+    book = get_object_or_404(Book, pk=book_id)
+    return render(request, 'books/details.template.html', {
+        "book": book
+    })
+
+
 @login_required
 def create_book(request):
 
