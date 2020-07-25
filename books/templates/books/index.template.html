@@ -1,15 +1,14 @@
+{% extends 'base.template.html' %}
 {%load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
-    <title>Document</title>
-</head>
-<body>
+
+{%block title%}All Books{%endblock%}
+
+
+{%block content %}
+    {% if request.user.is_authenticated %}
+    <h1>Welcome, {{request.user}}</h1>
+    {% endif %}
     <h1>Welcome to Book Reviews</h1>
     <p>Hi {{first_name}} {{last_name}}</p>
     <img src="{% static 'dune-cover.jpg' %}"/>
-</body>
-</html>
+{%endblock%}
