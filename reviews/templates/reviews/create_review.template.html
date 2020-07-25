@@ -1,0 +1,10 @@
+{% extends 'base.template.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<form method="POST">
+ {{ form|crispy}}
+ {% csrf_token %}
+ <input type="submit" value="Create Review" class="btn btn-primary"/>
+</form>
+{% endblock %}

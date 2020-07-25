@@ -35,6 +35,7 @@ urlpatterns = [
          name='update_author_route'),
     path('books/authors/create', books.views.create_author),
     path('reviews/', reviews.views.index),
+    path('reviews/create', reviews.views.create_review),
     path('forum/', forum.views.forum_home),
 
 ]
