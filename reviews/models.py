@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 # import the book model from the Reviews app
 from books.models import Book
@@ -13,6 +15,16 @@ class Review(models.Model):
     # so we can use text field isntead of char field.
     content = models.TextField(blank=False)
     date = models.DateField(blank=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
+
+
+class Comment(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    text = models.TextField(blank=False)
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text[0:50]

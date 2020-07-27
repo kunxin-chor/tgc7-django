@@ -9,7 +9,7 @@ class BookForm(forms.ModelForm):
         # they are like lists in Python
         # once we put something in a tuple, we cannot change the tuple anymore
         fields = ('title', 'desc', 'ISBN', 'pageCount', 'genre', 'category',
-                  'tags', 'authors')
+                  'tags', 'authors', 'owner')
 
 
 class AuthorForm(forms.ModelForm):
