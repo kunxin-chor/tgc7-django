@@ -3,6 +3,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import Book, Author
 from .forms import BookForm, AuthorForm
+from cloudinary.forms import cl_init_js_callbacks
 
 # Create your views here.
 # A view (in other words, a view function) refers to a function
@@ -43,9 +44,13 @@ def create_book(request):
 
         # create the BooKForm by filling it with data from the user's
         # submission
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, request.FILES)
         # create a model based on the data in the form
-        form.save()
+        if form.is_valid():
+            form.save()
+        else:
+            print(form.errors)
+            return HttpResponse("Form failed to validate")
 
         # the book is created
         messages.success(request, "New book has been created")
@@ -57,6 +62,7 @@ def create_book(request):
         # create an instance of the class BookForm and store it in the form
         # variable
         form = BookForm()
+        cl_init_js_callbacks(form, request)
         return render(request, 'books/create_book.template.html', {
             'form': form
         })
