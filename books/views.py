@@ -37,8 +37,7 @@ def index(request):
         # select all the books
         # SELECT * FROM Books
         books = Book.objects.all()
-
-        # SELECT * FROM Books WHERE 1 and title LIKES "%{title}%"
+        
         # make sure to reassign back to the query set
         books = books.filter(query)
 
