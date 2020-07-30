@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
@@ -33,6 +34,7 @@ class Book(models.Model):
     # with `null=True` the relationship is optional (i.e, can be set to NULL)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     cost = models.DecimalField(max_digits=10, decimal_places=3, blank=False)
+    cover = CloudinaryField()
 
     def __str__(self):
         return self.title
