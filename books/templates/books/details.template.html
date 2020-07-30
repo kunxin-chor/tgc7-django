@@ -1,9 +1,12 @@
 {% extends 'base.template.html' %}
-
+{% load cloudinary %}
 {%block content %}
 <div class="card">
     <div class="card-body">
         <div class="card-title"><h1>{{book.title}}</h1></div>
+
+        {% cloudinary book.cover %}
+
         <h2>Authors</h2>
         <ul>
             {%for a in book.authors.all %}
