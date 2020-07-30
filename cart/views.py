@@ -20,7 +20,8 @@ def add_to_cart(request, book_id):
             'id': book_id,
             'title': book.title,
             'cost': float(book.cost),
-            'qty': 1
+            'qty': 1,
+            'total_cost': float(book.cost)
         }
 
         messages.success(
@@ -43,7 +44,7 @@ def view_cart(request):
     for k, v in cart.items():
         # have to convert back to float because
         # session can only store strings
-        total += float(v['cost'])
+        total += float(v['cost']) * int(v['qty'])
 
     return render(request, 'cart/view_cart.template.html', {
         "cart": cart,
@@ -63,3 +64,21 @@ def remove_from_cart(request, book_id):
         messages.success(request, "The item has been removed")
 
     return redirect(reverse('view_cart'))
+
+
+def update_quantity(request, book_id):
+    # get the shopping cart
+    cart = request.session["shopping_cart"]
+    if book_id in cart:
+        # update the quantity
+        cart[book_id]['qty'] = request.POST['qty']
+        cart[book_id]['total_cost'] = int(request.POST['qty']) * float(cart[book_id]['cost'])
+
+        # save the cart back into the session
+        request.session["shopping_cart"] = cart
+        messages.success(request, f"Quantity for {cart[book_id]['title']} has been changed")
+
+        return redirect(reverse('view_cart'))
+    else:
+        messages.success(request, "The book doesn't exist in your cart.")
+        return redirect(reverse('view_cart'))

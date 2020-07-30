@@ -12,19 +12,22 @@
   </head>
   <body>
     <div class="container">
-    {%if messages %}
-        <div class="alert alert-success">
-            {%for message in messages %}
-            <div>
-                {{message}}
-            </div>
-            {%endfor%}
+        <div class="header">
+            <a href="{% url 'view_cart' %}">Shopping Cart ({{number_of_items}})</a>
         </div>
-    {%endif%}
+        {%if messages %}
+            <div class="alert alert-success">
+                {%for message in messages %}
+                <div>
+                    {{message}}
+                </div>
+                {%endfor%}
+            </div>
+        {%endif%}
 
 
-    {%block content %}
-    {%endblock%}
+        {%block content %}
+        {%endblock%}
     </div>
 
     <!-- Optional JavaScript -->
