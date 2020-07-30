@@ -1,5 +1,6 @@
 from django import forms
 from .models import Book, Author, Genre
+from cloudinary.forms import CloudinaryJsFileField
 
 
 class BookForm(forms.ModelForm):
@@ -9,7 +10,8 @@ class BookForm(forms.ModelForm):
         # they are like lists in Python
         # once we put something in a tuple, we cannot change the tuple anymore
         fields = ('title', 'desc', 'ISBN', 'pageCount', 'genre', 'category',
-                  'tags', 'authors', 'owner')
+                  'tags', 'authors', 'owner', 'cost', 'cover')
+    cover = CloudinaryJsFileField()
 
 
 class AuthorForm(forms.ModelForm):

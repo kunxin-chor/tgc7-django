@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
@@ -32,6 +33,8 @@ class Book(models.Model):
     # set the owner relationship to be NULLABLE so that it is not complusory for all books to have an owner
     # with `null=True` the relationship is optional (i.e, can be set to NULL)
     owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    cost = models.DecimalField(max_digits=10, decimal_places=3, blank=False)
+    cover = CloudinaryField()
 
     def __str__(self):
         return self.title
