@@ -1,6 +1,7 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse, reverse
+from django.shortcuts import render, get_object_or_404, HttpResponse, reverse, redirect
 from django.contrib.sites.models import Site
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib import messages
 
 # import in the settings
 from django.conf import settings
@@ -68,7 +69,10 @@ def checkout(request):
 
 
 def checkout_success(request):
-    return HttpResponse("checkout success")
+    request.session["shopping_cart"] = {}
+    messages.success(request, "Your purchases been completed")
+    return redirect(reverse('all_books_route'))
+    # return HttpResponse("checkout success")
 
 
 def checkout_cancelled(request):
