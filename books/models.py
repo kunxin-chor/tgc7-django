@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from cloudinary.models import CloudinaryField
 # Create your models here.
 
+from django.core.validators import MinLengthValidator
+
 
 class Tag(models.Model):
     title = models.CharField(blank=False, max_length=255)
@@ -19,7 +21,8 @@ class Genre(models.Model):
 
 
 class Book(models.Model):
-    title = models.CharField(blank=False, max_length=255)
+    title = models.CharField(blank=False, max_length=255, validators=[
+                             MinLengthValidator(3)])
     ISBN = models.CharField(blank=False, max_length=255)
     desc = models.TextField(blank=False)
     pageCount = models.IntegerField(blank=False)

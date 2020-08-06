@@ -23,6 +23,7 @@ urlpatterns = [
     path('books/', include('books.urls')),
     path('reviews/', include('reviews.urls')),
     path('forum/', forum.views.forum_home),
-    path('cart/', include('cart.urls'))
+    path('cart/', include('cart.urls')),
+    path('checkout/', include('checkout.urls'))
 
 ]

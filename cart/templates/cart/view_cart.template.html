@@ -7,7 +7,7 @@
     <li>
         {{value.title}} (${{value.cost}}) x {{value.qty}}<br/>
         Total Cost: ${{value.total_cost}}  <br/>       
-        <form method="POST" action="{% url "update_cart_quantity" book_id=value.id %}">
+        <form method="POST" action="{% url 'update_cart_quantity' book_id=value.id %}">
             {% csrf_token %}
             <a href="{% url 'remove_from_cart' book_id=value.id %}" class="btn btn-primary btn-sm">Remove</a>
             <input type="text" name="qty" value="{{value.qty}}" style="width:40px"/>
@@ -17,5 +17,7 @@
     {%endfor%}
 </ul>
 <h3>Cart Total: ${{total}}
+    <a href="{% url 'checkout' %}" class="btn btn-primary">Checkout</a>
+</h3>
 
 {%endblock%}
