@@ -37,7 +37,7 @@ def index(request):
         # select all the books
         # SELECT * FROM Books
         books = Book.objects.all()
-        
+
         # make sure to reassign back to the query set
         books = books.filter(query)
 
@@ -97,19 +97,24 @@ def create_book(request):
 
     # check if we are submitting the form
     if request.method == "POST":
-        print(request.POST)
 
         # create the BooKForm by filling it with data from the user's
         # submission
         form = BookForm(request.POST)
-        # create a model based on the data in the form
-        form.save()
 
-        # the book is created
-        messages.success(request, "New book has been created")
+        if form.is_valid():
+            # create a model based on the data in the form
+            form.save()
 
-        # redirect back to the show_books view function
-        return redirect(reverse(show_books))
+            # the book is created
+            messages.success(request, "New book has been created")
+
+            # redirect back to the show_books view function
+            return redirect(reverse(show_books))
+        else:
+            return render(request, 'books/create_book.template.html', {
+                'form': form
+            })
 
     else:
         # create an instance of the class BookForm and store it in the form
@@ -133,9 +138,15 @@ def create_author(request):
     if request.method == "POST":
         # user has submitted the data
         form = AuthorForm(request.POST)
-        form.save()
 
-        return redirect(reverse(show_authors))
+        if form.is_valid():
+            form.save()
+            messages.success(request, "New author has been created")
+            return redirect(reverse(show_authors))
+        else:
+            return render(request, 'books/create_author.template.html', {
+                'form': form
+             })
     else:
         # if user has not submitted data, it's a GET request,
         # so we will just show an empty form
