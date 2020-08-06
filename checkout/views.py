@@ -28,7 +28,7 @@ def checkout(request):
 
     # create our line items
     line_items = []
-
+    book_ids = []
     # go through each book in the shopping cart
     for book_id, book in cart.items():
         # retrieve the book by its id from the database
@@ -38,14 +38,24 @@ def checkout(request):
         # you see all the possible properties of a line item at:
         # https://stripe.com/docs/api/invoices/line_item
         item = {
-            "name": book_model.title,
-            "amount": int(book_model.cost * 100),
+            # "name": book_model.title,
+            # "amount": int(book_model.cost * 100),
+            "price_data": {
+                "currency": "usd",
+                "unit_amount": int(book_model.cost * 100),
+                "product_data": {
+                    "name": book_model.title,
+                    "metadata": {
+                        "id": str(book_model.id)
+                    }
+                }
+            },
             "quantity": book['qty'],
-            "currency": "usd",
-            "description": book_model.id
+
         }
 
         line_items.append(item)
+        book_ids.append(str(book_model.id))
 
     # get the current website
     current_site = Site.objects.get_current()
@@ -57,6 +67,8 @@ def checkout(request):
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],  # take credit cards
         line_items=line_items,
+        mode="payment",
+        metadata={"book_ids" : ",".join(book_ids)},
         client_reference_id=request.user.id,
         success_url=domain + reverse("checkout_success"),
         cancel_url=domain + reverse("checkout_cancelled")
@@ -116,11 +128,11 @@ def payment_completed(request):
 
 
 def handle_payment(session):
-    print(session)
-    user = get_object_or_404(User, pk=session["client_reference_id"])
 
-    for line_item in session["display_items"]:
-        book_id = int(line_item["custom"]["description"])
+    user = get_object_or_404(User, pk=session["client_reference_id"])
+    all_book_ids = session["metadata"]["book_ids"].split(',')
+
+    for book_id in all_book_ids:
         book_model = get_object_or_404(Book, pk=book_id)
 
         # create the purchase model
