@@ -92,7 +92,7 @@ def payment_completed(request):
     # verify that the payment is legit
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
 
-    endpoint_secret = "whsec_zy5aR45jWes3CqkknYltzOhv77UiKWW0"
+    endpoint_secret = settings.SIGNING_SECRET
     event = None
 
     try:
